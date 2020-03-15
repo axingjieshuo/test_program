@@ -23,3 +23,16 @@ $.ajax({
         console.log(e.responseText);
     }
 });
+
+$.post(
+    url,
+    {
+        name: 'value',
+    },
+    function(result) {
+        var str = "";
+        $('#content').html(str);
+        var str = "用户名："+result.username+"<br>密码："+result.password;
+        $('#content').html(str);
+    }
+);
