@@ -1,0 +1,125 @@
+<HTML>
+　　<HEAD>
+　　<TITLE>动态改变下拉菜单内容示例</TITLE>
+　　</HEAD>
+　　<SCRIPT LANGUAGE=javascript>
+　　//定义一个二维数组aArray,用于存放城市名称。
+　　var aCity=new Array();
+　　aCity[0]=new Array();
+　　aCity[1]=new Array();
+　　aCity[2]=new Array();
+　　aCity[3]=new Array();
+　　//赋值，每个省份的城市存放于数组的一行。
+　　aCity[0][0]="--请选择--";
+　　aCity[1][0]="--请选择--";
+　　aCity[1][1]="广州市";
+　　aCity[1][2]="深圳市";
+　　aCity[1][3]="珠海市";
+　　aCity[1][4]="汕头市";
+　　aCity[1][5]="佛山市";
+　　aCity[2][0]="--请选择--";
+　　aCity[2][1]="长沙市";
+　　aCity[2][2]="株州市";
+　　aCity[2][3]="湘潭市";
+　　aCity[3][0]="--请选择--";
+　　aCity[3][1]="杭州市";
+　　aCity[3][2]="苏州市";
+　　aCity[3][3]="温州市";
+　　function ChangeCity()
+　　{
+　　var i,iProvinceIndex;
+　　iProvinceIndex=document.frm.optProvince.selectedIndex;
+　　iCityCount=0;
+　　while (aCity[iProvinceIndex][iCityCount]!=null)
+　　iCityCount++;
+　　//计算选定省份的城市个数
+　　document.frm.optCity.length=iCityCount;//改变下拉菜单的选项数
+　　for (i=0;i<=iCityCount-1;i++)//改变下拉菜单的内容
+　　document.frm.optCity[i]=new Option(aCity[iProvinceIndex][i]);
+　　document.frm.optCity.focus();
+　　}
+　　</SCRIPT>
+　　<BODY ONfocus=ChangeCity()>
+　　<H3>选择你所在的省份及城市</H3>
+　　<FORM NAME="frm">
+　　<P>省份：
+　　<SELECT NAME="optProvince" SIZE="1" ONCHANGE=ChangeCity()>
+　　<OPTION>--请选择--</OPTION>
+　　<OPTION>广东省</OPTION>
+　　<OPTION>湖南省</OPTION>
+　　<OPTION>浙江省</OPTION>
+　　</SELECT>
+　　</P>
+　　<P>城市：
+　　<SELECT NAME="optCity" SIZE="1">
+　　<OPTION>--请选择--</OPTION>
+　　</SELECT>
+　　</P>
+　　</FORM>
+　　</BODY>
+　　</HTML>
+
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+
+        <!--引入jquery框架-->
+        <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            //            在函数中添加选项列表联动的事件
+            $(function() {
+                //                定义两个数组,既然是二级联动的列表,那么第二个列表肯定就是二维的了,也就是下面的city数组
+                var pro = ['省份一', '省份二', '省份三'];
+                var city = [
+                    ['1', '2', '3'],
+                    ['4', '5'],
+                    ['6']
+                ];
+
+                //使用一个for循环设置好省份的选项列表,这一步比较简单,逻辑也比较清晰
+                //                append():添加选项
+                //                val():返回当前选项值
+                //                html():给返回的当前选项添加内容
+                for(var i = 0; i < pro.length; i++) {
+                    $("#pp").append($("<option></option>").val(i + 1).html(pro[i]));
+                }
+
+                //                这里是监听第一个选项列表的改变事件, 也就是当我们选中省份中的某一项时, 第二个列表会显示出相对应的城市名字
+                $('#pp').change(function() {
+                    //定义一个变量,存放选中的项是第几项,然后减去一个1作为二维数组的下标
+                    var index = $(this).val() - 1;
+//                    设置属性值
+                    $("#cc").prop("length", 1);
+
+                    for(var i = 0; i < city[index].length; i++) {
+                        $("#cc").append($("<option></option>").val(i + 1).html(city[index][i]));
+
+                    }
+
+                })
+
+            })
+        </script>
+
+    </head>
+
+    <body>
+
+        <!--先在body中定义好连个下拉列表-->
+        <select id="pp">
+            <option selected="selected">请选择</option>
+
+        </select>
+
+        <select id="cc">
+            <option selected="selected">请选择</option>
+
+        </select>
+
+    </body>
+
+</html>
